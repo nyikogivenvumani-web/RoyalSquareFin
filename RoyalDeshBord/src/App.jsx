@@ -10,7 +10,11 @@ import ContactPage from './welcome/ContactPage';
 // AfterLogin directory pages
 import LoginPage from './afterLogin/loginPage';
 import DashPage from './afterLogin/DashPage';
-import ReportIncident from './afterLogin/ReportIncident';   // ✅ imported
+import ReportIncident from './afterLogin/ReportIncident'; 
+import PoliciesPage from './afterLogin/PoliciesPage';
+import AdvisorsPage from './afterLogin/AdvisorsPage';
+import AnalyticsPage from './afterLogin/AnalyticsPage';
+
 
 export default function App() {
   return (
@@ -25,7 +29,11 @@ export default function App() {
         {/* Authenticated / Portal Routes */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashPage />} />
-        <Route path="/report-incident" element={<ReportIncident />} />   {/* ✅ new route */}
+        <Route path="/report-incident" element={<ReportIncident />} /> 
+        <Route path="/policies" element={<PoliciesPage />} />
+        <Route path="/advisors" element={<AdvisorsPage />} />
+        <Route path="/analytics" element={<AnalyticsPage />} />
+
       </Routes>
     </Router>
   );
