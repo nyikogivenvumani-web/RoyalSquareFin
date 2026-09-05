@@ -1,21 +1,31 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+export default function NavForMain() {
+  const location = useLocation()
+
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'About Us', path: '/about' },
+    { name: 'Products', path: '/products' },
+    { name: 'Contact', path: '/contact' },
+  ]
 
   return (
-    <header className="bg-[#0B1D33] text-white border-b border-white/10 sticky top-0 z-50">
-      <nav className="flex items-center justify-between max-w-7xl mx-auto px-8 py-4">
+    <header className="border-b border-white/10 bg-[#0B1D33]/90 backdrop-blur-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
+        
         {/* Brand Logo */}
-        <Link to="/" className="flex items-center gap-3">
-          <div className="border border-amber-300 rounded-full w-10 h-10 flex items-center justify-center font-serif text-amber-300 font-semibold">
+        <Link to="/" className="flex items-center gap-3 group">
+          <div className="w-10 h-10 rounded-xl bg-amber-300/10 border border-amber-300/30 flex items-center justify-center font-serif font-bold text-amber-300 text-lg group-hover:bg-amber-300 group-hover:text-gray-900 transition-all">
             RS
           </div>
-          <div>
-            <span className="text-lg font-semibold block leading-tight">Royal Square</span>
-            <span className="text-[10px] tracking-widest text-amber-300 block font-sans uppercase">
-              FINANCIAL INVESTMENTS
+          <div className="flex flex-col">
+            <span className="font-serif font-bold tracking-wide text-white text-lg leading-tight">
+              ROYAL SQUARE
+            </span>
+            <span className="text-[10px] tracking-widest text-amber-300 font-semibold uppercase">
+              Financial
             </span>
           </div>
         </Link>
@@ -25,16 +35,15 @@ export default function Navbar() {
           <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
           <li><Link to="/products" className="hover:text-white transition-colors">Products</Link></li>
           <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-          <li><Link to="/partner" className="hover:text-white transition-colors">Partners</Link></li>
         </ul>
 
-        {/* Action Button */}
-        <div className="hidden md:block">
+        {/* Action Buttons: Login & Consultation */}
+        <div className="flex items-center gap-4">
           <Link
-            to="/contact"
-            className="bg-white text-gray-900 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-amber-300 transition-colors flex items-center gap-1"
+            to="/login"
+            className="text-xs font-semibold uppercase tracking-wider text-white hover:text-amber-300 px-4 py-2.5 rounded-full border border-white/15 hover:border-amber-300/40 transition-all"
           >
-            Speak to an adviser <span>↗</span>
+            Client Login
           </Link>
         </div>
 
@@ -60,16 +69,15 @@ export default function Navbar() {
           <Link to="/about" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>About</Link>
           <Link to="/products" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>Products</Link>
           <Link to="/contact" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>Contact</Link>
-          <Link to="/partners" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>Partners</Link>
           <Link
             to="/contact"
-            className="inline-block bg-white text-gray-900 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-amber-300 transition-colors mt-2"
-            onClick={() => setIsOpen(false)}
+            className="hidden sm:inline-flex bg-amber-300 hover:bg-amber-400 text-gray-900 text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full transition-colors shadow-md"
           >
-            Speak to an adviser ↗
+            Get in Touch <span>↗</span>
           </Link>
         </div>
-      )}
+
+      </div>
     </header>
   )
 }
