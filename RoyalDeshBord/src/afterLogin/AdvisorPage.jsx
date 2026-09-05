@@ -10,7 +10,6 @@ export default function AdvisorPage() {
     phone: '+27 (0)11 892 4000',
     directLine: '+27 (0)82 555 0192',
     officeLocation: 'Sandton, Johannesburg',
-    avatarUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=256',
     specialties: ['Corporate Wealth Preservation', 'Fleet & Commercial Cover', 'Key Person Retirement Funds'],
   })
 
@@ -61,11 +60,10 @@ export default function AdvisorPage() {
 
         {/* Advisor Main Profile Card */}
         <div className="p-8 rounded-3xl bg-white/5 border border-white/10 flex flex-col md:flex-row items-center md:items-start gap-8">
-          <img
-            src={advisor.avatarUrl}
-            alt={advisor.name}
-            className="w-32 h-32 rounded-2xl object-cover border-2 border-amber-300/40 shadow-xl shrink-0"
-          />
+          {/* Avatar / Profile Icon */}
+          <div className="w-28 h-28 rounded-2xl bg-amber-300/10 border-2 border-amber-300/40 text-amber-300 flex items-center justify-center text-4xl font-serif shrink-0 shadow-xl">
+            👤
+          </div>
 
           <div className="space-y-4 text-center md:text-left flex-1">
             <div>
