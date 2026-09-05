@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Navbar from "../welcome/NavForMain";
+import Navbar from "./NavForDash";
 
 export default function Dashboard() {
   const [userData] = useState({
@@ -33,7 +33,7 @@ export default function Dashboard() {
 
   return (
     <div className="bg-[#0B1D33] text-white min-h-screen">
-      <Navbar />
+     <NavForDash />
 
       <main className="max-w-4xl mx-auto px-6 py-10 space-y-6">
         {/* Header Greeting */}
