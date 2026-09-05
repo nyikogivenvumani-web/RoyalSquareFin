@@ -10,6 +10,7 @@ import ContactPage from './welcome/ContactPage'
 // AfterLogin directory pages (matching exact file names and casing)
 import LoginPage from './afterLogin/loginPage'
 import DashPage from './afterLogin/DashPage'
+import DashPage from './afterLogin/DashPage'
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/products" element={<Products />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/dashboard" element={<DashPage />} />
         
         {/* Authenticated / Portal Routes */}
         <Route path="/login" element={<LoginPage />} />
