@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 export default function NavForMain() {
+  const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
 
   const navLinks = [
@@ -32,12 +33,21 @@ export default function NavForMain() {
 
         {/* Desktop Navigation Links */}
         <ul className="hidden md:flex items-center gap-8 text-sm text-gray-300 font-medium">
-          <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
-          <li><Link to="/products" className="hover:text-white transition-colors">Products</Link></li>
-          <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+          {navLinks.map((link) => (
+            <li key={link.path}>
+              <Link
+                to={link.path}
+                className={`transition-colors ${
+                  location.pathname === link.path ? 'text-amber-300 font-semibold' : 'hover:text-white'
+                }`}
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
         </ul>
 
-        {/* Action Buttons: Login & Consultation */}
+        {/* Action Buttons: Login */}
         <div className="flex items-center gap-4">
           <Link
             to="/login"
@@ -61,23 +71,32 @@ export default function NavForMain() {
             )}
           </svg>
         </button>
-      </nav>
+      </div>
 
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-[#0B1D33] border-t border-white/10 px-8 py-6 space-y-4">
-          <Link to="/about" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>About</Link>
-          <Link to="/products" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>Products</Link>
-          <Link to="/contact" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>Contact</Link>
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`block font-medium ${
+                location.pathname === link.path ? 'text-amber-300' : 'text-gray-300 hover:text-white'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
           <Link
             to="/contact"
-            className="hidden sm:inline-flex bg-amber-300 hover:bg-amber-400 text-gray-900 text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full transition-colors shadow-md"
+            className="inline-flex bg-amber-300 hover:bg-amber-400 text-gray-900 text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full transition-colors shadow-md mt-2"
+            onClick={() => setIsOpen(false)}
           >
-            Get in Touch <span>↗</span>
+            Get in Touch <span className="ml-1">↗</span>
           </Link>
         </div>
-
-      </div>
+      )}
     </header>
   )
 }
