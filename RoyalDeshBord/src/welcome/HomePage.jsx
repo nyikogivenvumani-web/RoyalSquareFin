@@ -10,7 +10,6 @@ function Footer() {
         {/* Divider Line */}
         <hr className="border-t border-gray-700 mb-6" />
 
-        {/* Legal Text */}
         <p className="text-sm text-gray-300 leading-relaxed text-center">
           Royal Square Financial (Pty) Ltd — FSP Number 29370 <br />
           Registration No: 2009/022911/07 <br />
