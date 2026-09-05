@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Navbar from "./NavForDash";
+import NavForDash from "./NavForDash" // Updated import name
 
 export default function Dashboard() {
   const [userData] = useState({
@@ -33,7 +33,7 @@ export default function Dashboard() {
 
   return (
     <div className="bg-[#0B1D33] text-white min-h-screen">
-     <NavForDash />
+      <NavForDash />
 
       <main className="max-w-4xl mx-auto px-6 py-10 space-y-6">
         {/* Header Greeting */}
@@ -49,7 +49,7 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* 1. Hero Net Worth Card (Styled like the prominent balance banner in your image) */}
+        {/* Hero Net Worth Card */}
         <div className="rounded-3xl bg-blue-600 p-8 shadow-2xl relative overflow-hidden">
           <div className="relative z-10 flex flex-col md:flex-row justify-between md:items-center gap-6">
             <div>
@@ -74,13 +74,11 @@ export default function Dashboard() {
               </button>
             </div>
           </div>
-          {/* Subtle background overlay effect */}
           <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-white/5 rounded-full blur-2xl pointer-events-none" />
         </div>
 
-        {/* 2x2 Metric Grid (Structured directly like the app UI reference) */}
+        {/* Metric Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {/* 2. Active Policies */}
           <div className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all">
             <div className="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-lg mb-3">
               🛡️
@@ -90,7 +88,6 @@ export default function Dashboard() {
             <span className="inline-block mt-2 text-[10px] text-emerald-400 font-medium">100% Covered</span>
           </div>
 
-          {/* 4. Expiring Soon */}
           <div className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-300/40 transition-all">
             <div className="w-9 h-9 rounded-xl bg-amber-300/10 text-amber-300 flex items-center justify-center text-lg mb-3">
               ⏳
@@ -100,7 +97,6 @@ export default function Dashboard() {
             <span className="inline-block mt-2 text-[10px] text-amber-300 font-medium">Action Needed</span>
           </div>
 
-          {/* Assets Breakdown */}
           <div className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all">
             <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg mb-3">
               📈
@@ -110,7 +106,6 @@ export default function Dashboard() {
             <span className="inline-block mt-2 text-[10px] text-emerald-400 font-medium">↑ 11.5% YoY</span>
           </div>
 
-          {/* Liabilities Breakdown */}
           <div className="p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all">
             <div className="w-9 h-9 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-lg mb-3">
               📉
@@ -121,7 +116,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* 5. Recently Expired Policy Alert Section */}
+        {/* Expired Policy Alert */}
         <div className="p-6 rounded-2xl bg-red-500/10 border border-red-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <div className="p-3 rounded-xl bg-red-500/20 text-red-400 text-xl shrink-0">
@@ -145,9 +140,8 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* Bottom Split Layout: 3. Goal Progress & Policy List */}
+        {/* Goal Progress & Policy Schedule */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* 3. Goal Progress Card */}
           <div className="p-6 rounded-2xl bg-white/5 border border-white/10 space-y-5">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-serif font-semibold">Goal Progress</h2>
@@ -178,7 +172,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Active Policies Summary Card */}
           <div className="p-6 rounded-2xl bg-white/5 border border-white/10 space-y-5">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-serif font-semibold">Policy Schedule</h2>
