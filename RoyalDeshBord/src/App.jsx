@@ -10,6 +10,7 @@ import ContactPage from './welcome/ContactPage'
 // AfterLogin directory pages
 import LoginPage from './afterLogin/loginPage'
 import DashPage from './afterLogin/DashPage'
+import PortfolioPage from './afterLogin/PortfolioPage'
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         {/* Authenticated / Portal Routes */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashPage />} />
+        <Route path="/portfolio" element={<PortfolioPage />} />
       </Routes>
     </Router>
   )

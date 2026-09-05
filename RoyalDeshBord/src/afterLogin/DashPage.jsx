@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../welcome/NavForMain';
+import NavForDash from './NavForDash';
 
 export default function Dashboard() {
   const [userData] = useState({
@@ -85,7 +85,8 @@ export default function Dashboard() {
 
   return (
     <div className="bg-[#0B1D33] text-white min-h-screen">
-      <Navbar />
+      {/* Updated Dedicated Dashboard Navbar */}
+      <NavForDash />
 
       <main className="max-w-4xl mx-auto px-6 py-10 space-y-6">
         {/* Header Greeting + Actions */}
@@ -99,17 +100,17 @@ export default function Dashboard() {
 
           {/* Right-side action buttons */}
           <div className="flex items-center gap-3">
-            {/* ✅ NEW: + Report Incident button */}
+            {/* + Report Incident button */}
             <button
               onClick={handleReportIncident}
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-xl shadow transition-colors"
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-xl shadow transition-colors cursor-pointer"
             >
               <span className="text-xl leading-none">+</span>
               Report Incident
             </button>
 
-            {/* Notification bell (existing) */}
-            <button className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center border border-white/15 text-gray-300 hover:text-white transition-colors">
+            {/* Notification bell */}
+            <button className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center border border-white/15 text-gray-300 hover:text-white transition-colors cursor-pointer">
               🔔
             </button>
           </div>
@@ -132,10 +133,10 @@ export default function Dashboard() {
             </div>
 
             <div className="flex gap-3">
-              <button className="bg-amber-300 hover:bg-amber-400 text-gray-900 text-xs font-semibold px-5 py-3 rounded-2xl transition-colors shadow">
+              <button className="bg-amber-300 hover:bg-amber-400 text-gray-900 text-xs font-semibold px-5 py-3 rounded-2xl transition-colors shadow cursor-pointer">
                 View Portfolio
               </button>
-              <button className="bg-white/10 hover:bg-white/20 text-white text-xs font-medium px-5 py-3 rounded-2xl transition-colors border border-white/20 backdrop-blur-md">
+              <button className="bg-white/10 hover:bg-white/20 text-white text-xs font-medium px-5 py-3 rounded-2xl transition-colors border border-white/20 backdrop-blur-md cursor-pointer">
                 Add Asset
               </button>
             </div>
@@ -208,7 +209,7 @@ export default function Dashboard() {
               </p>
             </div>
           </div>
-          <button className="bg-red-500 hover:bg-red-600 text-white text-xs font-medium px-4 py-2.5 rounded-xl transition-colors whitespace-nowrap shadow">
+          <button className="bg-red-500 hover:bg-red-600 text-white text-xs font-medium px-4 py-2.5 rounded-xl transition-colors whitespace-nowrap shadow cursor-pointer">
             Renew Policy
           </button>
         </div>
