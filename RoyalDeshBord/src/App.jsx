@@ -12,9 +12,8 @@ import LoginPage from './afterLogin/loginPage';
 import DashPage from './afterLogin/DashPage';
 import ReportIncident from './afterLogin/ReportIncident'; 
 import PoliciesPage from './afterLogin/PoliciesPage';
-import AdvisorPage from './afterLogin/AdvisorPage';
-import AnalticsPage from './afterLogin/AnalticsPage';
-
+import AdvisorsPage from './afterLogin/AdvisorPage'; // Align the import alias with your route usage
+import AnalyticsPage from './afterLogin/AnalticsPage'; // Align the import alias or fix the filename
 
 export default function App() {
   return (
