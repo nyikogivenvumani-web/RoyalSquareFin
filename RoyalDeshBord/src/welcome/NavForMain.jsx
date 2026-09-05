@@ -9,6 +9,7 @@ export default function NavForMain() {
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
     { name: 'Products', path: '/products' },
+    { name: 'Partners', path: '/partners' },
     { name: 'Contact', path: '/contact' },
   ]
 
