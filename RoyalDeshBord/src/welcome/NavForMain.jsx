@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -7,7 +8,7 @@ export default function Navbar() {
     <header className="bg-[#0B1D33] text-white border-b border-white/10 sticky top-0 z-50">
       <nav className="flex items-center justify-between max-w-7xl mx-auto px-8 py-4">
         {/* Brand Logo */}
-        <a href="/" className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <div className="border border-amber-300 rounded-full w-10 h-10 flex items-center justify-center font-serif text-amber-300 font-semibold">
             RS
           </div>
@@ -17,25 +18,23 @@ export default function Navbar() {
               FINANCIAL INVESTMENTS
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Navigation Links */}
         <ul className="hidden md:flex items-center gap-8 text-sm text-gray-300 font-medium">
-          <li><a href="/about" className="hover:text-white transition-colors">About</a></li>
-          <li><a href="/personal" className="hover:text-white transition-colors">Personal</a></li>
-          <li><a href="/business" className="hover:text-white transition-colors">Business</a></li>
-          <li><a href="/investments" className="hover:text-white transition-colors">Investments</a></li>
-          <li><a href="/claims" className="hover:text-white transition-colors">Claims</a></li>
+          <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
+          <li><Link to="/products" className="hover:text-white transition-colors">Products</Link></li>
+          <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
         </ul>
 
         {/* Action Button */}
         <div className="hidden md:block">
-          <a
-            href="/contact"
+          <Link
+            to="/contact"
             className="bg-white text-gray-900 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-amber-300 transition-colors flex items-center gap-1"
           >
             Speak to an adviser <span>↗</span>
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Menu Toggle Button */}
@@ -54,20 +53,19 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-[#0B1D33] border-t border-white/10 px-8 py-6 space-y-4">
-          <a href="/about" className="block text-gray-300 hover:text-white font-medium">About</a>
-          <a href="/personal" className="block text-gray-300 hover:text-white font-medium">Personal</a>
-          <a href="/business" className="block text-gray-300 hover:text-white font-medium">Business</a>
-          <a href="/investments" className="block text-gray-300 hover:text-white font-medium">Investments</a>
-          <a href="/claims" className="block text-gray-300 hover:text-white font-medium">Claims</a>
-          <a
-            href="/contact"
+          <Link to="/about" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>About</Link>
+          <Link to="/products" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>Products</Link>
+          <Link to="/contact" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>Contact</Link>
+          <Link
+            to="/contact"
             className="inline-block bg-white text-gray-900 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-amber-300 transition-colors mt-2"
+            onClick={() => setIsOpen(false)}
           >
             Speak to an adviser ↗
-          </a>
+          </Link>
         </div>
       )}
     </header>
