@@ -33,12 +33,17 @@ export default function ContactPage() {
             — Get In Touch
           </span>
           <h1 className="text-5xl font-serif leading-tight">
-            Speak to an adviser today.
+            CALL ME BACK
           </h1>
           <p className="text-gray-300 text-lg mt-4 max-w-xl">
-            Whether you need personal insurance, asset management, or corporate financial solutions, our dedicated advisors are ready to assist.
-          </p>
-        </div>
+          Get 24/7 roadside fuel assist
+           </p>
+         <p className="text-gray-300 text-lg mt-2 max-w-xl">
+         Locksmith assist for lost car keys
+        </p>
+       <p className="text-gray-300 text-lg mt-2 max-w-xl">
+     50% of claims auto‑settled
+    </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Left Column: Direct Contact & Office Details */}
