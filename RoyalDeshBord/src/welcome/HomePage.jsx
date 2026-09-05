@@ -25,7 +25,7 @@ export default function HomePage() {
     <div className="bg-[#0B1D33] text-white min-h-screen">
       <Navbar />
 
-      {/* Hero Body */}
+     
       <section className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
           <span className="text-amber-300 text-xs tracking-widest font-semibold uppercase block mb-4">
@@ -42,7 +42,7 @@ export default function HomePage() {
             We start with affordability, not a product — so you leave with cover you can keep paying for.
           </p>
 
-          {/* Call to Action Buttons */}
+         
             <Link
               to="/products"
               className="border border-white/20 hover:border-amber-300 text-white hover:text-amber-300 font-semibold px-6 py-3.5 rounded-full text-sm transition-colors"
@@ -61,7 +61,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    {/* Footer at the end of the page */}
+    
       <Footer />
     </div>
   );
