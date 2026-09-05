@@ -25,6 +25,7 @@ export default function Navbar() {
           <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
           <li><Link to="/products" className="hover:text-white transition-colors">Products</Link></li>
           <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+          <li><Link to="/partner" className="hover:text-white transition-colors">Partners</Link></li>
         </ul>
 
         {/* Action Button */}
@@ -59,6 +60,7 @@ export default function Navbar() {
           <Link to="/about" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>About</Link>
           <Link to="/products" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>Products</Link>
           <Link to="/contact" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>Contact</Link>
+          <Link to="/partners" className="block text-gray-300 hover:text-white font-medium" onClick={() => setIsOpen(false)}>Partners</Link>
           <Link
             to="/contact"
             className="inline-block bg-white text-gray-900 px-5 py-2.5 rounded-full text-sm font-medium hover:bg-amber-300 transition-colors mt-2"
