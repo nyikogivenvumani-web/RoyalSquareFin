@@ -3,6 +3,23 @@ import { Link } from 'react-router-dom'
 import Navbar from './NavForMain'
 import heroImg from '../assets/hero.png'
 
+function Footer() {
+  return (
+    <footer className="bg-[#0B1D33] text-white py-8 mt-12">
+      <div className="max-w-7xl mx-auto px-8">
+        {/* Divider Line */}
+        <hr className="border-t border-gray-700 mb-6" />
+
+        {/* Legal Text */}
+        <p className="text-sm text-gray-300 leading-relaxed text-center">
+          Royal Square Financial (Pty) Ltd — FSP Number 29370 <br />
+          Registration No: 2009/022911/07 <br />
+          © {new Date().getFullYear()} Royal Square Financial. All Rights Reserved.
+        </p>
+      </div>
+    </footer>
+  );
+}
 export default function HomePage() {
   return (
     <div className="bg-[#0B1D33] text-white min-h-screen">
@@ -26,13 +43,6 @@ export default function HomePage() {
           </p>
 
           {/* Call to Action Buttons */}
-          <div className="flex flex-wrap items-center gap-4">
-            <Link
-              to="/contact"
-              className="bg-amber-300 hover:bg-amber-400 text-gray-900 font-semibold px-6 py-3.5 rounded-full text-sm transition-colors shadow-lg flex items-center gap-2"
-            >
-              Get Started <span>↗</span>
-            </Link>
             <Link
               to="/products"
               className="border border-white/20 hover:border-amber-300 text-white hover:text-amber-300 font-semibold px-6 py-3.5 rounded-full text-sm transition-colors"
@@ -51,6 +61,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+    {/* Footer at the end of the page */}
+      <Footer />
     </div>
-  )
+  );
 }
