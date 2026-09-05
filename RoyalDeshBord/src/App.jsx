@@ -11,6 +11,7 @@ import ContactPage from './welcome/ContactPage'
 import LoginPage from './afterLogin/loginPage'
 import DashPage from './afterLogin/DashPage'
 import PortfolioPage from './afterLogin/PortfolioPage'
+import AdvisorPage from './afterLogin/AdvisorPage'
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashPage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />
+        <Route path="/advisor" element={<AdvisorPage />} />
       </Routes>
     </Router>
   )
