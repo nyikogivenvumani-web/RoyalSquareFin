@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Navbar from './NavForMain'
+import Navbar from "../welcome/NavForMain";
 
 export default function Dashboard() {
   const [userData] = useState({

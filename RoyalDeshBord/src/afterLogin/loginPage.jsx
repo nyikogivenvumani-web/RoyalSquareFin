@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../welcome/NavForMain'
 
 export default function LoginPage() {
+  const navigate = useNavigate() // 1. Initialize navigate hook
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -20,8 +23,9 @@ export default function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Handle login submission logic here
-    console.log('Logging in with:', formData)
+    
+    // 2. Redirect to dashboard on submission
+    navigate('/dashboard')
   }
 
   return (
@@ -29,9 +33,7 @@ export default function LoginPage() {
       <Navbar />
 
       <main className="max-w-md w-full mx-auto px-6 py-12 flex-grow flex flex-col justify-center">
-        {/* Card Frame */}
         <div className="p-8 rounded-3xl bg-white/5 border border-white/10 shadow-2xl backdrop-blur-md">
-          {/* Header */}
           <div className="text-center mb-8">
             <span className="text-amber-300 text-xs tracking-widest font-semibold uppercase block mb-2">
               — Secure Client Portal
@@ -46,7 +48,6 @@ export default function LoginPage() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email Field */}
             <div>
               <label className="block text-xs font-semibold uppercase text-gray-300 mb-2">
                 Email Address
@@ -62,7 +63,6 @@ export default function LoginPage() {
               />
             </div>
 
-            {/* Password Field */}
             <div>
               <div className="flex justify-between items-center mb-2">
                 <label className="block text-xs font-semibold uppercase text-gray-300">
@@ -95,7 +95,6 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Remember Me */}
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -113,16 +112,14 @@ export default function LoginPage() {
               </label>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-amber-300 hover:bg-amber-400 text-gray-900 font-semibold py-3.5 rounded-full text-sm transition-colors flex items-center justify-center gap-2 shadow-lg mt-2"
+              className="w-full bg-amber-300 hover:bg-amber-400 text-gray-900 font-semibold py-3.5 rounded-full text-sm transition-colors flex items-center justify-center gap-2 shadow-lg mt-2 cursor-pointer"
             >
               Sign In to Dashboard <span>↗</span>
             </button>
           </form>
 
-          {/* Footer Link */}
           <div className="mt-8 pt-6 border-t border-white/10 text-center">
             <p className="text-xs text-gray-400">
               Don't have an account yet?{' '}
@@ -137,7 +134,6 @@ export default function LoginPage() {
         </div>
       </main>
 
-      {/* Security Note Footer */}
       <footer className="py-6 text-center text-[11px] text-gray-400">
         🔒 Encrypted 256-bit SSL Connection • POPIA Regulatory Compliant
       </footer>
