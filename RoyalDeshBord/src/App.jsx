@@ -12,8 +12,8 @@ import LoginPage from './afterLogin/loginPage';
 import DashPage from './afterLogin/DashPage';
 import ReportIncident from './afterLogin/ReportIncident'; 
 import PoliciesPage from './afterLogin/PoliciesPage';
-import AdvisorsPage from './afterLogin/AdvisorsPage';
-import AnalyticsPage from './afterLogin/AnalyticsPage';
+import AdvisorPage from './afterLogin/AdvisorPage';
+import AnalticsPage from './afterLogin/AnalticsPage';
 
 
 export default function App() {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import NavForDash from './NavForDash'
+import Nav from './NavForDash'
 
 export default function AdvisorPage() {
   const [advisor] = useState({
@@ -42,7 +42,7 @@ export default function AdvisorPage() {
 
   return (
     <div className="bg-[#0B1D33] text-white min-h-screen">
-      <NavForDash />
+      <Nav />
 
       <main className="max-w-6xl mx-auto px-6 py-10 space-y-8">
         {/* Page Header */}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';   // ✅ for navigation
-import Navbar from '../welcome/NavForMain';
+import Navbar from './NavForDash';
 
 export default function Dashboard() {
   const [userData] = useState({

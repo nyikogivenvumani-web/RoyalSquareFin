@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import NavForDash from './NavForDash'; // 1. Import the dashboard navigation component
 
 export default function ReportIncident() {
   // Form fields state
@@ -37,6 +38,9 @@ export default function ReportIncident() {
 
   return (
     <div className="bg-[#0B1D33] text-white min-h-screen">
+      {/* 2. Render the navigation bar here */}
+      <NavForDash />
+
       <main className="max-w-4xl mx-auto px-6 py-10 space-y-8">
         {/* Header with Back Link */}
         <div className="flex items-center justify-between">
