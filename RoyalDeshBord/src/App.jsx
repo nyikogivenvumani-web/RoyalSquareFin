@@ -12,6 +12,7 @@ import LoginPage from './afterLogin/loginPage'
 import DashPage from './afterLogin/DashPage'
 import PortfolioPage from './afterLogin/PortfolioPage'
 import AdvisorPage from './afterLogin/AdvisorPage'
+import PoliciesPage from './afterLogin/PoliciesPage'
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/dashboard" element={<DashPage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/advisor" element={<AdvisorPage />} />
+        <Route path="/policies" element={<PoliciesPage />} />
       </Routes>
     </Router>
   )
