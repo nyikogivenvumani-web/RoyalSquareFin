@@ -1,9 +1,11 @@
-// Casing must match the file tree (HomePage with capital 'P'):
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
+// Casing matching the file tree in the welcome folder
 import HomePage from './welcome/HomePage'
 import AboutUs from './welcome/AboutUs'
 import Products from './welcome/Products'
 import ContactPage from './welcome/ContactPage'
-import NavForMain from './welcome/NavForMain'
 
 export default function App() {
   return (
