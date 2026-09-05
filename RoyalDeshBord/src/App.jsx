@@ -1,18 +1,16 @@
-import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+=import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Welcome directory pages
-import HomePage from './welcome/HomePage'
-import AboutUs from './welcome/AboutUs'
-import Products from './welcome/Products'
-import ContactPage from './welcome/ContactPage'
+import HomePage from './welcome/HomePage';
+import AboutUs from './welcome/AboutUs';
+import Products from './welcome/Products';
+import ContactPage from './welcome/ContactPage';
 
 // AfterLogin directory pages
-import LoginPage from './afterLogin/loginPage'
-import DashPage from './afterLogin/DashPage'
-import PortfolioPage from './afterLogin/PortfolioPage'
-import AdvisorPage from './afterLogin/AdvisorPage'
-import PoliciesPage from './afterLogin/PoliciesPage'
+import LoginPage from './afterLogin/loginPage';
+import DashPage from './afterLogin/DashPage';
+import ReportIncident from './afterLogin/ReportIncident';   // ✅ imported
 
 export default function App() {
   return (
@@ -27,10 +25,8 @@ export default function App() {
         {/* Authenticated / Portal Routes */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashPage />} />
-        <Route path="/portfolio" element={<PortfolioPage />} />
-        <Route path="/advisor" element={<AdvisorPage />} />
-        <Route path="/policies" element={<PoliciesPage />} />
+        <Route path="/report-incident" element={<ReportIncident />} />   {/* ✅ new route */}
       </Routes>
     </Router>
-  )
+  );
 }
