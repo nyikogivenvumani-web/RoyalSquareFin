@@ -1,0 +1,23 @@
+datasource db {
+  provider = "postgresql" // or "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Policy {
+  id             String   @id @default(uuid())
+  policyNumber   String   @unique
+  name           String
+  type           String   // Business, Life, Asset, Property, Equipment
+  provider       String   // Santam, Liberty, Discovery, etc.
+  premium        String   // e.g. "R 2,400 / mo"
+  coverageAmount String   // e.g. "R 5,000,000"
+  status         String   // Active, Expiring Soon, Expired
+  startDate      DateTime
+  expiryDate     DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
