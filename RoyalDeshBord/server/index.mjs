@@ -1,20 +1,16 @@
-import express from 'express';
-import cors from 'cors';
-import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
-
-dotenv.config();
+const express = require('express');
+const cors = require('cors');
+const { createClient } = require('@supabase/supabase-js');
+require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Initialize Supabase Client
 const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// GET all policies
 app.get('/api/policies', async (req, res) => {
   const { data, error } = await supabase
     .from('Policy')
@@ -25,7 +21,6 @@ app.get('/api/policies', async (req, res) => {
   res.json(data);
 });
 
-// POST a new policy
 app.post('/api/policies', async (req, res) => {
   const { data, error } = await supabase
     .from('Policy')

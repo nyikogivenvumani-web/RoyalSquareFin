@@ -19,13 +19,14 @@ function Footer() {
     </footer>
   );
 }
+
 export default function HomePage() {
   return (
     <div className="bg-[#0B1D33] text-white min-h-screen">
       <Navbar />
 
-     
       <section className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Left Column */}
         <div>
           <span className="text-amber-300 text-xs tracking-widest font-semibold uppercase block mb-4">
             — Independent advice. Enduring confidence.
@@ -41,17 +42,15 @@ export default function HomePage() {
             We start with affordability, not a product — so you leave with cover you can keep paying for.
           </p>
 
-         
-            <Link
-              to="/products"
-              className="border border-white/20 hover:border-amber-300 text-white hover:text-amber-300 font-semibold px-6 py-3.5 rounded-full text-sm transition-colors"
-            >
-              Explore Products
-            </Link>
-          </div>
+          <Link
+            to="/products"
+            className="border border-white/20 hover:border-amber-300 text-white hover:text-amber-300 font-semibold px-6 py-3.5 rounded-full text-sm transition-colors"
+          >
+            Explore Products
+          </Link>
         </div>
 
-        {/* Custom Rounded Corner Image Frame */}
+        {/* Right Column: Custom Rounded Corner Image Frame */}
         <div className="relative rounded-[40px] rounded-tl-[120px] overflow-hidden border border-white/10">
           <img src={heroImg} alt="Financial Advisor" className="w-full h-auto object-cover" />
           <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-md p-4 rounded-2xl text-gray-900 max-w-xs shadow-lg">

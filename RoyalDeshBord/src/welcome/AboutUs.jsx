@@ -1,8 +1,11 @@
 import React from 'react'
+import Navbar from './NavForMain'
 
 export default function AboutUs() {
   return (
     <div className="bg-[#0B1D33] text-white min-h-screen">
+      <Navbar />
+
       {/* Header / Hero Section */}
       <section className="max-w-7xl mx-auto px-8 pt-16 pb-12">
         <span className="text-amber-300 text-xs tracking-widest font-semibold uppercase block mb-3">
