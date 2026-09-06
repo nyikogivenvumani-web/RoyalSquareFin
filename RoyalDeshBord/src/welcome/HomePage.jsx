@@ -1,4 +1,3 @@
-// HomePage.jsx
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from './NavForMain'
@@ -62,7 +61,7 @@ export default function HomePage() {
               to="/contact"
               className="border border-slate-300 hover:border-slate-900 text-slate-700 hover:text-slate-900 font-medium px-7 py-3.5 rounded-full text-xs tracking-wider uppercase transition-all bg-white"
             >
-              Download prospectus
+              Connect With Us
             </Link>
           </div>
         </div>
@@ -70,12 +69,7 @@ export default function HomePage() {
         {/* Right Column: Clean Editorial Media Card */}
         <div className="lg:col-span-5">
           <div className="relative rounded-[32px] overflow-hidden border border-slate-200 bg-white shadow-xl">
-            <img src={heroImg} alt="Financial Advisory" className="w-full h-[450px] object-cover" />
-            
-            <div className="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-medium px-3.5 py-1.5 rounded-full flex items-center gap-2 shadow-md">
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-              1:42 • Watch our story
-            </div>
+           
 
             <div className="absolute bottom-4 inset-x-4 bg-white/95 backdrop-blur-md p-5 rounded-2xl border border-slate-100 shadow-lg flex items-center justify-between">
               <div>
@@ -83,7 +77,7 @@ export default function HomePage() {
                 <div className="text-xs text-slate-500 mt-0.5">Trusted by families & businesses across SA</div>
               </div>
               <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 font-bold">
-                ✓
+                
               </div>
             </div>
           </div>
