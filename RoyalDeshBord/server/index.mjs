@@ -10,7 +10,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || 'royal_square_secure_jwt_key_2026';
 
-app.use(cors());
+// Middleware configuration
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
 // --- LOCAL IN-MEMORY DATABASE ---
@@ -52,6 +58,7 @@ const localDb = {
   ]
 };
 
+// Middleware to verify JWT token
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
@@ -76,24 +83,26 @@ const verifyAdmin = (req, res, next) => {
   }
 };
 
-// Login Endpoint (Fixed to respect incoming admin credentials)
+// --- AUTHENTICATION ENDPOINTS ---
+
 app.post('/api/login', async (req, res) => {
   try {
-    const { email } = req.body;
-    if (!email) {
-      return res.status(400).json({ error: 'Email is required' });
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
     }
     
     const normalizedEmail = email.trim().toLowerCase();
     
-    // Find existing user or create a session profile on the fly
     let user = localDb.users.find(u => u.email.toLowerCase() === normalizedEmail);
     if (!user) {
       user = {
         id: "u-" + Date.now(),
         email: normalizedEmail,
         name: normalizedEmail.includes('admin') ? 'System Administrator' : 'Nyiko',
-        role: normalizedEmail === 'admin@royalsquare.co.za' ? 'admin' : 'client'
+        role: normalizedEmail === 'admin@royalsquare.co.za' ? 'admin' : 'client',
+        password: password
       };
       localDb.users.push(user);
     }
@@ -110,11 +119,13 @@ app.post('/api/login', async (req, res) => {
       name: user.name
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Login Error:', err.message);
+    res.status(500).json({ error: 'Internal server error during authentication' });
   }
 });
 
-// Protected Dashboard Endpoint (Local)
+// --- DASHBOARD & PORTFOLIO ENDPOINTS ---
+
 app.get('/api/dashboard', verifyToken, async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -173,11 +184,9 @@ app.get('/api/dashboard', verifyToken, async (req, res) => {
   }
 });
 
-// Protected Portfolio Endpoint (Local)
 app.get('/api/portfolio', verifyToken, async (req, res) => {
   try {
     const assets = localDb.assets;
-
     const totalValue = assets.reduce((acc, item) => acc + Number(item.value || 0), 0);
     const monthlyYield = Math.round(totalValue * 0.0085);
 
@@ -197,7 +206,8 @@ app.get('/api/portfolio', verifyToken, async (req, res) => {
   }
 });
 
-// Protected Policies Endpoints (Local)
+// --- POLICY MANAGEMENT ENDPOINTS ---
+
 app.get('/api/policies', verifyToken, async (req, res) => {
   try {
     res.json(localDb.policies);
@@ -223,7 +233,6 @@ app.post('/api/policies', verifyToken, async (req, res) => {
 
 // --- ADMIN MANAGEMENT ENDPOINTS ---
 
-// Get all system users (Admin Only)
 app.get('/api/admin/users', verifyToken, verifyAdmin, async (req, res) => {
   try {
     const safeUsers = localDb.users.map(({ password, ...user }) => user);
@@ -233,7 +242,6 @@ app.get('/api/admin/users', verifyToken, verifyAdmin, async (req, res) => {
   }
 });
 
-// Update user role (Admin Only)
 app.patch('/api/admin/users/:id/role', verifyToken, verifyAdmin, async (req, res) => {
   try {
     const { role } = req.body;
@@ -250,7 +258,6 @@ app.patch('/api/admin/users/:id/role', verifyToken, verifyAdmin, async (req, res
   }
 });
 
-// Delete policy record (Admin Only)
 app.delete('/api/admin/policies/:id', verifyToken, verifyAdmin, async (req, res) => {
   try {
     const index = localDb.policies.findIndex(p => p.id === req.params.id);

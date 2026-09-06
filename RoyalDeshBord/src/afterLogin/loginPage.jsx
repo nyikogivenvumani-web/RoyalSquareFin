@@ -48,7 +48,11 @@ export default function LoginPage() {
         navigate('/dashboard');
       }
     } catch (err) {
-      setError(err.message);
+      if (err.name === 'TypeError') {
+        setError('Unable to connect to server. Please ensure the backend server is running on port 5000.');
+      } else {
+        setError(err.message);
+      }
     }
   }
 

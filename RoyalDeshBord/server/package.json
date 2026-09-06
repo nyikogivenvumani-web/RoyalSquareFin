@@ -26,6 +26,8 @@
   },
   "allowScripts": {
     "bcryptjs@3.0.3": true,
-    "jsonwebtoken@9.0.3": true
+    "jsonwebtoken@9.0.3": true,
+    "cors@2.8.6": true,
+    "dotenv@17.4.2": true
   }
 }
