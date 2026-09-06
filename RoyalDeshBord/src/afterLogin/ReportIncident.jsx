@@ -8,19 +8,34 @@ export default function ReportIncident() {
     incidentDate: '',
     severityLevel: 'Moderate',
     location: '',
+    crossStreets: '',
+    directionOfTravel: '',
     description: '',
-    evidenceFile: null,
+    roadSurfacePhotos: [],
+    vehiclePeoplePhotos: [],
+    licenseDiscsPhotos: [],
+    idDocumentsPhotos: [],
+    witnessName: '',
+    witnessContact: '',
+    witnessVoiceNote: null,
+    insuranceDetails: '',
   })
 
   const [submitted, setSubmitted] = useState(false)
 
   const handleInputChange = (e) => {
-    const { name, value, files } = e.target
-    if (name === 'evidenceFile') {
-      setFormData((prev) => ({ ...prev, [name]: files[0] || null }))
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }))
-    }
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleFileChange = (e, fieldName) => {
+    const files = Array.from(e.target.files)
+    setFormData((prev) => ({ ...prev, [fieldName]: files }))
+  }
+
+  const handleSingleFileChange = (e, fieldName) => {
+    const file = e.target.files[0] || null
+    setFormData((prev) => ({ ...prev, [fieldName]: file }))
   }
 
   const handleSubmit = (e) => {
@@ -57,11 +72,11 @@ export default function ReportIncident() {
             </div>
             <h2 className="text-2xl font-serif font-semibold text-slate-900">Incident Reported Successfully</h2>
             <p className="text-sm text-slate-600 max-w-md mx-auto">
-              Your incident report has been securely registered. Our risk and compliance team has been notified for immediate review.
+              Your comprehensive incident report, witness audio, and evidence have been securely registered. Our risk and compliance team has been notified for immediate review.
             </p>
             <button
               onClick={() => setSubmitted(false)}
-              className="mt-4 bg-slate-900 hover:bg-slate-800 text-white font-medium px-6 py-2.5 rounded-full text-xs transition-colors shadow-sm"
+              className="mt-4 bg-slate-900 hover:bg-slate-800 text-white font-medium px-6 py-2.5 rounded-full text-xs transition-colors shadow-sm cursor-pointer"
             >
               Report Another Incident
             </button>
@@ -78,7 +93,7 @@ export default function ReportIncident() {
                     required
                     value={formData.incidentTitle}
                     onChange={handleInputChange}
-                    placeholder="e.g. Facility Perimeter Breach"
+                    placeholder="e.g. Commercial Vehicle Collision"
                     className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
                   />
                 </div>
@@ -113,14 +128,42 @@ export default function ReportIncident() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Location / Asset Reference</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Direction of Travel</label>
+                  <input
+                    type="text"
+                    name="directionOfTravel"
+                    required
+                    value={formData.directionOfTravel}
+                    onChange={handleInputChange}
+                    placeholder="e.g. Traveling North on M1"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Exact Address</label>
                   <input
                     type="text"
                     name="location"
                     required
                     value={formData.location}
                     onChange={handleInputChange}
-                    placeholder="e.g. Sandton Central Hub, Site B"
+                    placeholder="e.g. 124 Main Street"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Nearest Cross Streets</label>
+                  <input
+                    type="text"
+                    name="crossStreets"
+                    required
+                    value={formData.crossStreets}
+                    onChange={handleInputChange}
+                    placeholder="e.g. Corner of Rivonia Rd & Maude St"
                     className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
                   />
                 </div>
@@ -139,15 +182,111 @@ export default function ReportIncident() {
                 ></textarea>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Attach Evidence / Logs</label>
-                <input
-                  type="file"
-                  name="evidenceFile"
-                  onChange={handleInputChange}
-                  className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 transition-colors file:cursor-pointer"
-                />
-                <p className="text-xs text-slate-400 mt-1">Upload relevant logs, photos, or documents (PDF, JPG, PNG)</p>
+              {/* Upload Sections */}
+              <div className="space-y-6 pt-4 border-t border-slate-100">
+                <h3 className="text-sm font-semibold text-slate-900">Incident Evidence & Documentation</h3>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">1. Photos of Road Surface & Direction of Travel</label>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e, 'roadSurfacePhotos')}
+                    className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 transition-colors file:cursor-pointer"
+                  />
+                  <p className="text-xs text-slate-400 mt-1">Upload photos showing road conditions, skid marks, signage, or lane markings</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">2. Photos of All Vehicles and People Involved</label>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e, 'vehiclePeoplePhotos')}
+                    className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 transition-colors file:cursor-pointer"
+                  />
+                  <p className="text-xs text-slate-400 mt-1">Upload clear shots of vehicle damages and involved parties</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">3. Photos of License Plates and Registration Discs</label>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e, 'licenseDiscsPhotos')}
+                    className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 transition-colors file:cursor-pointer"
+                  />
+                  <p className="text-xs text-slate-400 mt-1">Upload close-ups of vehicle license plates and valid window registration discs</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">4. Photos of ID Documents of Everyone Involved</label>
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => handleFileChange(e, 'idDocumentsPhotos')}
+                    className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 transition-colors file:cursor-pointer"
+                  />
+                  <p className="text-xs text-slate-400 mt-1">Upload clear photos of driver licenses or identity documents of all parties involved</p>
+                </div>
+              </div>
+
+              {/* Witness & Third-Party Details Section */}
+              <div className="space-y-6 pt-4 border-t border-slate-100">
+                <h3 className="text-sm font-semibold text-slate-900">Witness & Insurance Information</h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Witness Full Name</label>
+                    <input
+                      type="text"
+                      name="witnessName"
+                      value={formData.witnessName}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Sipho Khumalo"
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Witness Contact Details</label>
+                    <input
+                      type="text"
+                      name="witnessContact"
+                      value={formData.witnessContact}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Phone number or email"
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Witness Voice Note</label>
+                  <input
+                    type="file"
+                    accept="audio/*"
+                    onChange={(e) => handleSingleFileChange(e, 'witnessVoiceNote')}
+                    className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 transition-colors file:cursor-pointer"
+                  />
+                  <p className="text-xs text-slate-400 mt-1">Upload an audio recording of the witness testimony (MP3, WAV, M4A)</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Insurance Details of Involved Parties</label>
+                  <textarea
+                    name="insuranceDetails"
+                    rows="3"
+                    value={formData.insuranceDetails}
+                    onChange={handleInputChange}
+                    placeholder="Provide insurer names, policy numbers, and contact details for third parties..."
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                  ></textarea>
+                </div>
               </div>
 
               <button

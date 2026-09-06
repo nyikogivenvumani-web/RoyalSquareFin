@@ -1,6 +1,6 @@
-// NavForMain.jsx
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import logoImg from '../assets/logo.jpeg'
 
 export default function NavForMain() {
   const [isOpen, setIsOpen] = useState(false)
@@ -21,9 +21,11 @@ export default function NavForMain() {
         
         {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-serif font-bold text-sm">
-            RS
-          </div>
+          <img 
+            src={logoImg} 
+            alt="Royal Square Financial Logo" 
+            className="h-9 w-auto object-contain"
+          />
           <div className="flex flex-col">
             <span className="font-serif font-bold tracking-tight text-slate-900 text-base leading-none">
               ROYAL SQUARE

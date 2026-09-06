@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import logoImg from '../assets/logo.jpeg'
 
 export default function NavForDash() {
   const [isOpen, setIsOpen] = useState(false)
@@ -15,6 +16,7 @@ export default function NavForDash() {
   ]
 
   const handleLogout = () => {
+    localStorage.removeItem('authToken')
     navigate('/')
   }
 
@@ -24,9 +26,11 @@ export default function NavForDash() {
         
         {/* Brand Logo */}
         <Link to="/dashboard" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-serif font-bold text-slate-900 text-lg group-hover:bg-slate-900 group-hover:text-white transition-all">
-            RS
-          </div>
+          <img 
+            src={logoImg} 
+            alt="Royal Square Financial Logo" 
+            className="h-10 w-auto object-contain"
+          />
           <div className="flex flex-col">
             <span className="font-serif font-bold tracking-wide text-slate-900 text-lg leading-tight">
               ROYAL SQUARE
@@ -120,7 +124,7 @@ export default function NavForDash() {
               setIsOpen(false)
               handleLogout()
             }}
-            className="w-full text-left font-medium text-sm text-red-600 hover:text-red-700 pt-2 border-t border-slate-100"
+            className="w-full text-left font-medium text-sm text-red-600 hover:text-red-700 pt-2 border-t border-slate-100 cursor-pointer"
           >
             Sign Out
           </button>
