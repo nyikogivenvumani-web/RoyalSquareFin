@@ -6,6 +6,7 @@ import HomePage from './welcome/HomePage';
 import AboutUs from './welcome/AboutUs';
 import Products from './welcome/Products';
 import ContactPage from './welcome/ContactPage';
+import Partners from './welcome/Partners'; // Ensure this is used if needed
 
 // AfterLogin directory pages
 import LoginPage from './afterLogin/loginPage';
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/products" element={<Products />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/partners" element={<Partners />} />
 
         {/* Authenticated / Portal Routes */}
         <Route path="/login" element={<LoginPage />} />

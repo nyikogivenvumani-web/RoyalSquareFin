@@ -1,220 +1,166 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import NavForDash from './NavForDash'; // 1. Import the dashboard navigation component
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import NavForDash from './NavForDash'
 
 export default function ReportIncident() {
-  // Form fields state
   const [formData, setFormData] = useState({
+    incidentTitle: '',
+    incidentDate: '',
+    severityLevel: 'Moderate',
     location: '',
-    driverName: '',
-    driverLicense: '',
-    driverContact: '',
-    thirdPartyName: '',
-    thirdPartyInsurance: '',
-    thirdPartyPolicy: '',
-    thirdPartyContact: '',
-    licenceFile: null,
-    voiceNoteFile: null,
-    photos: [],
-  });
+    description: '',
+    evidenceFile: null,
+  })
+
+  const [submitted, setSubmitted] = useState(false)
 
   const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === 'licenceFile' || name === 'voiceNoteFile') {
-      setFormData((prev) => ({ ...prev, [name]: files[0] || null }));
-    } else if (name === 'photos') {
-      setFormData((prev) => ({ ...prev, [name]: Array.from(files) }));
+    const { name, value, files } = e.target
+    if (name === 'evidenceFile') {
+      setFormData((prev) => ({ ...prev, [name]: files[0] || null }))
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }))
     }
-  };
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form Data:', formData);
-    console.log('Photos uploaded:', formData.photos.length);
-    // Add your submission logic here
-  };
+    e.preventDefault()
+    console.log('Incident Reported:', formData)
+    setSubmitted(true)
+  }
 
   return (
-    <div className="bg-[#0B1D33] text-white min-h-screen">
-      {/* 2. Render the navigation bar here */}
+    <div className="bg-[#f8fafc] text-slate-900 min-h-screen">
       <NavForDash />
 
-      <main className="max-w-4xl mx-auto px-6 py-10 space-y-8">
+      <main className="max-w-4xl mx-auto px-6 py-12 space-y-8">
         {/* Header with Back Link */}
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-amber-300 text-xs tracking-widest font-semibold uppercase block">
-              — Incident Report
+            <span className="text-blue-600 text-xs tracking-wider font-semibold uppercase block">
+              — Incident Protocol
             </span>
-            <h1 className="text-3xl font-serif mt-1">Report a Motor Incident</h1>
+            <h1 className="text-3xl font-serif mt-1 text-slate-900">Report an Incident</h1>
           </div>
           <Link
             to="/dashboard"
-            className="text-amber-300 hover:text-amber-400 text-sm font-medium flex items-center gap-2 transition-colors"
+            className="text-slate-600 hover:text-slate-900 text-sm font-medium flex items-center gap-2 transition-colors"
           >
             ← Back to Dashboard
           </Link>
         </div>
 
-        {/* Main Form Card */}
-        <div className="p-6 md:p-8 rounded-2xl bg-white/5 border border-white/10 space-y-8">
-          <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Location */}
-            <div>
-              <label className="block text-sm font-medium text-gray-300">Location (cross streets / address)</label>
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleInputChange}
-                placeholder="e.g. Corner of Main & 5th"
-                className="mt-1 w-full px-4 py-3 bg-white/10 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-300 focus:border-transparent outline-none transition"
-              />
+        {submitted ? (
+          <div className="p-8 rounded-3xl bg-white border border-slate-200/80 shadow-sm text-center space-y-4">
+            <div className="w-12 h-12 bg-emerald-50 text-emerald-600 border border-emerald-200 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
+              ✓
             </div>
+            <h2 className="text-2xl font-serif font-semibold text-slate-900">Incident Reported Successfully</h2>
+            <p className="text-sm text-slate-600 max-w-md mx-auto">
+              Your incident report has been securely registered. Our risk and compliance team has been notified for immediate review.
+            </p>
+            <button
+              onClick={() => setSubmitted(false)}
+              className="mt-4 bg-slate-900 hover:bg-slate-800 text-white font-medium px-6 py-2.5 rounded-full text-xs transition-colors shadow-sm"
+            >
+              Report Another Incident
+            </button>
+          </div>
+        ) : (
+          <div className="p-8 rounded-3xl bg-white border border-slate-200/80 shadow-sm space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Incident Title / Summary</label>
+                  <input
+                    type="text"
+                    name="incidentTitle"
+                    required
+                    value={formData.incidentTitle}
+                    onChange={handleInputChange}
+                    placeholder="e.g. Facility Perimeter Breach"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                  />
+                </div>
 
-            {/* Driver & Third-Party Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Driver Details */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-amber-300 uppercase tracking-wider">Driver Details</h3>
                 <div>
-                  <label className="block text-sm font-medium text-gray-300">Full Name</label>
-                  <input
-                    type="text"
-                    name="driverName"
-                    value={formData.driverName}
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Severity Level</label>
+                  <select
+                    name="severityLevel"
+                    value={formData.severityLevel}
                     onChange={handleInputChange}
-                    placeholder="Your name"
-                    className="mt-1 w-full px-4 py-3 bg-white/10 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-300 focus:border-transparent outline-none transition"
-                  />
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-blue-600 transition"
+                  >
+                    <option>Low</option>
+                    <option>Moderate</option>
+                    <option>Critical / High</option>
+                    <option>Emergency</option>
+                  </select>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300">Licence Number</label>
-                  <input
-                    type="text"
-                    name="driverLicense"
-                    value={formData.driverLicense}
-                    onChange={handleInputChange}
-                    placeholder="e.g. 1234567890"
-                    className="mt-1 w-full px-4 py-3 bg-white/10 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-300 focus:border-transparent outline-none transition"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300">Contact</label>
-                  <input
-                    type="text"
-                    name="driverContact"
-                    value={formData.driverContact}
-                    onChange={handleInputChange}
-                    placeholder="Phone or email"
-                    className="mt-1 w-full px-4 py-3 bg-white/10 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-300 focus:border-transparent outline-none transition"
-                  />
-                </div>
-              </div>
-
-              {/* Third Party Details */}
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-amber-300 uppercase tracking-wider">Third‑Party Details</h3>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300">Name</label>
-                  <input
-                    type="text"
-                    name="thirdPartyName"
-                    value={formData.thirdPartyName}
-                    onChange={handleInputChange}
-                    placeholder="Other driver's name"
-                    className="mt-1 w-full px-4 py-3 bg-white/10 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-300 focus:border-transparent outline-none transition"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300">Insurance Company</label>
-                  <input
-                    type="text"
-                    name="thirdPartyInsurance"
-                    value={formData.thirdPartyInsurance}
-                    onChange={handleInputChange}
-                    placeholder="Insurance provider"
-                    className="mt-1 w-full px-4 py-3 bg-white/10 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-300 focus:border-transparent outline-none transition"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300">Policy Number</label>
-                  <input
-                    type="text"
-                    name="thirdPartyPolicy"
-                    value={formData.thirdPartyPolicy}
-                    onChange={handleInputChange}
-                    placeholder="Policy #"
-                    className="mt-1 w-full px-4 py-3 bg-white/10 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-300 focus:border-transparent outline-none transition"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300">Contact</label>
-                  <input
-                    type="text"
-                    name="thirdPartyContact"
-                    value={formData.thirdPartyContact}
-                    onChange={handleInputChange}
-                    placeholder="Phone or email"
-                    className="mt-1 w-full px-4 py-3 bg-white/10 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-300 focus:border-transparent outline-none transition"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* File Uploads */}
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-300">Upload Photos of Damage / Scene</label>
-                <input
-                  type="file"
-                  name="photos"
-                  accept="image/*"
-                  multiple
-                  onChange={handleInputChange}
-                  className="mt-1 w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-300 file:text-gray-900 hover:file:bg-amber-400 transition-colors file:cursor-pointer"
-                />
-                <p className="text-xs text-gray-500 mt-1">You can select multiple images (JPG, PNG, etc.)</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300">Upload Driving Licence</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Incident Date & Time</label>
                   <input
-                    type="file"
-                    name="licenceFile"
-                    accept="image/*,.pdf"
+                    type="datetime-local"
+                    name="incidentDate"
+                    required
+                    value={formData.incidentDate}
                     onChange={handleInputChange}
-                    className="mt-1 w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-300 file:text-gray-900 hover:file:bg-amber-400 transition-colors file:cursor-pointer"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 outline-none focus:ring-2 focus:ring-blue-600 transition"
                   />
                 </div>
+
                 <div>
-                  <label className="block text-sm font-medium text-gray-300">Voice Note (optional)</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Location / Asset Reference</label>
                   <input
-                    type="file"
-                    name="voiceNoteFile"
-                    accept="audio/*"
+                    type="text"
+                    name="location"
+                    required
+                    value={formData.location}
                     onChange={handleInputChange}
-                    className="mt-1 w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-300 file:text-gray-900 hover:file:bg-amber-400 transition-colors file:cursor-pointer"
+                    placeholder="e.g. Sandton Central Hub, Site B"
+                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
                   />
-                  <p className="text-xs text-gray-500 mt-1">Upload an audio file (MP3, WAV, etc.)</p>
                 </div>
               </div>
-            </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="w-full bg-amber-300 hover:bg-amber-400 text-gray-900 font-semibold py-3 px-6 rounded-2xl shadow-md transition-colors flex items-center justify-center gap-2"
-            >
-              <span>Continue to Claim Form</span>
-              <span>→</span>
-            </button>
-          </form>
-        </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Detailed Description of Events</label>
+                <textarea
+                  name="description"
+                  rows="4"
+                  required
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  placeholder="Describe the context, potential impact, and immediate actions taken..."
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition"
+                ></textarea>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Attach Evidence / Logs</label>
+                <input
+                  type="file"
+                  name="evidenceFile"
+                  onChange={handleInputChange}
+                  className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 transition-colors file:cursor-pointer"
+                />
+                <p className="text-xs text-slate-400 mt-1">Upload relevant logs, photos, or documents (PDF, JPG, PNG)</p>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-3.5 px-6 rounded-2xl shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Submit Incident Report</span>
+                <span>→</span>
+              </button>
+            </form>
+          </div>
+        )}
       </main>
     </div>
-  );
+  )
 }

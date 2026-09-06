@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+// LoginPage.jsx
+import React, { useState } from 'react'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import Navbar from '../welcome/NavForMain'
 
 export default function LoginPage() {
@@ -52,25 +53,25 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="bg-[#0B1D33] text-white min-h-screen flex flex-col justify-between">
+    <div className="bg-[#F8F9FC] text-gray-900 min-h-screen flex flex-col justify-between">
       <Navbar />
 
       <main className="max-w-md w-full mx-auto px-6 py-12 flex-grow flex flex-col justify-center">
-        <div className="p-8 rounded-3xl bg-white/5 border border-white/10 shadow-2xl backdrop-blur-md">
+        <div className="p-8 rounded-3xl bg-white border border-gray-200 shadow-xl">
           <div className="text-center mb-8">
-            <span className="text-amber-300 text-xs tracking-widest font-semibold uppercase block mb-2">
-              — Secure System Portal
+            <span className="text-gray-500 text-xs tracking-widest font-semibold uppercase block mb-3">
+              — SECURE SYSTEM PORTAL
             </span>
-            <h1 className="text-3xl font-serif font-semibold text-white">
+            <h1 className="text-3xl font-serif font-semibold text-gray-900">
               Welcome Back
             </h1>
-            <p className="text-xs text-gray-400 mt-2">
+            <p className="text-xs text-gray-500 mt-2">
               {formData.email === 'admin@royalsquare.co.za' ? 'Logging in as System Administrator' : 'Access your portfolio, policies, and advisor communications'}
             </p>
           </div>
 
           {error && (
-            <div className="mb-4 p-3 rounded-xl bg-red-500/20 border border-red-500/40 text-red-300 text-xs text-center">
+            <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600 text-xs text-center">
               {error}
             </div>
           )}
@@ -78,7 +79,7 @@ export default function LoginPage() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-semibold uppercase text-gray-300 mb-2">
+              <label className="block text-xs font-semibold uppercase text-gray-600 mb-2">
                 Email Address
               </label>
               <input
@@ -88,13 +89,13 @@ export default function LoginPage() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="name@example.com"
-                className="w-full bg-white/10 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-amber-300 transition-colors"
+                className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#0B1D33] transition-colors"
               />
             </div>
 
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label className="block text-xs font-semibold uppercase text-gray-300">
+                <label className="block text-xs font-semibold uppercase text-gray-600">
                   Password
                 </label>
               </div>
@@ -106,12 +107,12 @@ export default function LoginPage() {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full bg-white/10 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-amber-300 transition-colors pr-10"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#0B1D33] transition-colors pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white text-xs"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-900 text-xs font-medium"
                 >
                   {showPassword ? 'Hide' : 'Show'}
                 </button>
@@ -120,7 +121,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="w-full bg-amber-300 hover:bg-amber-400 text-gray-900 font-semibold py-3.5 rounded-full text-sm transition-colors flex items-center justify-center gap-2 shadow-lg mt-2 cursor-pointer"
+              className="w-full bg-[#0B1D33] hover:bg-[#152e4d] text-white font-semibold py-3.5 rounded-full text-sm transition-colors flex items-center justify-center gap-2 shadow-lg mt-2 cursor-pointer"
             >
               Sign In <span>↗</span>
             </button>
@@ -128,7 +129,7 @@ export default function LoginPage() {
         </div>
       </main>
 
-      <footer className="py-6 text-center text-[11px] text-gray-400">
+      <footer className="py-6 text-center text-[11px] text-gray-500 border-t border-gray-200 bg-white">
         Encrypted 256-bit SSL Connection • POPIA Regulatory Compliant
       </footer>
     </div>
