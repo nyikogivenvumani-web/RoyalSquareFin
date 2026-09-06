@@ -1,3 +1,4 @@
+// NavForMain.jsx
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -14,32 +15,33 @@ export default function NavForMain() {
   ]
 
   return (
-    <header className="border-b border-white/10 bg-[#0B1D33]/90 backdrop-blur-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
+    <header className="sticky top-4 z-50 px-4 sm:px-8">
+      {/* Floating Pill Header */}
+      <nav className="max-w-6xl mx-auto bg-white/90 backdrop-blur-md border border-slate-200/80 rounded-full px-6 py-3.5 shadow-sm flex items-center justify-between">
         
         {/* Brand Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-xl bg-amber-300/10 border border-amber-300/30 flex items-center justify-center font-serif font-bold text-amber-300 text-lg group-hover:bg-amber-300 group-hover:text-gray-900 transition-all">
+        <Link to="/" className="flex items-center gap-2.5 group">
+          <div className="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center font-serif font-bold text-sm">
             RS
           </div>
           <div className="flex flex-col">
-            <span className="font-serif font-bold tracking-wide text-white text-lg leading-tight">
+            <span className="font-serif font-bold tracking-tight text-slate-900 text-base leading-none">
               ROYAL SQUARE
             </span>
-            <span className="text-[10px] tracking-widest text-amber-300 font-semibold uppercase">
+            <span className="text-[9px] tracking-widest text-slate-500 font-semibold uppercase mt-0.5">
               Financial
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation Links */}
-        <ul className="hidden md:flex items-center gap-8 text-sm text-gray-300 font-medium">
+        <ul className="hidden md:flex items-center gap-7 text-sm text-slate-600 font-medium">
           {navLinks.map((link) => (
             <li key={link.path}>
               <Link
                 to={link.path}
                 className={`transition-colors ${
-                  location.pathname === link.path ? 'text-amber-300 font-semibold' : 'hover:text-white'
+                  location.pathname === link.path ? 'text-slate-900 font-semibold' : 'hover:text-slate-900'
                 }`}
               >
                 {link.name}
@@ -48,20 +50,27 @@ export default function NavForMain() {
           ))}
         </ul>
 
-        {/* Action Buttons: Login */}
-        <div className="flex items-center gap-4">
+        {/* Action Buttons: Client Login & Admin Portal */}
+        <div className="hidden md:flex items-center gap-3">
           <Link
             to="/login"
-            className="text-xs font-semibold uppercase tracking-wider text-white hover:text-amber-300 px-4 py-2.5 rounded-full border border-white/15 hover:border-amber-300/40 transition-all"
+            className="text-xs font-semibold uppercase tracking-wider text-slate-700 hover:text-slate-900 px-4 py-2 rounded-full border border-slate-200 hover:border-slate-300 transition-all"
           >
             Client Login
+          </Link>
+          <Link
+            to="/login"
+            state={{ defaultEmail: 'admin@royalsquare.co.za' }}
+            className="text-xs font-semibold uppercase tracking-wider bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-full transition-colors shadow-sm"
+          >
+            Admin Portal
           </Link>
         </div>
 
         {/* Mobile Menu Toggle Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-gray-300 hover:text-white focus:outline-none p-2"
+          className="md:hidden text-slate-700 hover:text-slate-900 focus:outline-none p-1"
           aria-label="Toggle navigation menu"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,30 +81,40 @@ export default function NavForMain() {
             )}
           </svg>
         </button>
-      </div>
+      </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div className="md:hidden bg-[#0B1D33] border-t border-white/10 px-8 py-6 space-y-4">
+        <div className="md:hidden max-w-6xl mx-auto mt-2 bg-white border border-slate-200 rounded-2xl px-6 py-6 space-y-4 shadow-lg">
           {navLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
-              className={`block font-medium ${
-                location.pathname === link.path ? 'text-amber-300' : 'text-gray-300 hover:text-white'
+              className={`block font-medium text-sm ${
+                location.pathname === link.path ? 'text-slate-900 font-semibold' : 'text-slate-600 hover:text-slate-900'
               }`}
               onClick={() => setIsOpen(false)}
             >
               {link.name}
             </Link>
           ))}
-          <Link
-            to="/contact"
-            className="inline-flex bg-amber-300 hover:bg-amber-400 text-gray-900 text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full transition-colors shadow-md mt-2"
-            onClick={() => setIsOpen(false)}
-          >
-            Get in Touch <span className="ml-1">↗</span>
-          </Link>
+          <div className="flex flex-col gap-2 pt-2 border-t border-slate-100">
+            <Link
+              to="/login"
+              state={{ defaultEmail: 'admin@royalsquare.co.za' }}
+              className="text-center bg-slate-100 text-slate-800 text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Admin Portal
+            </Link>
+            <Link
+              to="/contact"
+              className="text-center bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full transition-colors shadow-sm"
+              onClick={() => setIsOpen(false)}
+            >
+              Get in Touch
+            </Link>
+          </div>
         </div>
       )}
     </header>

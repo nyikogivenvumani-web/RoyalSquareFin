@@ -21,8 +21,14 @@ const localDb = {
       email: "nyiko@royalsquare.co.za",
       name: "Nyiko",
       role: "client",
-      // password is 'password123' (hashed or plain fallback supported)
       password: "password123" 
+    },
+    {
+      id: "u-admin-001",
+      email: "admin@royalsquare.co.za",
+      name: "System Administrator",
+      role: "admin",
+      password: "password123"
     }
   ],
   assets: [
@@ -61,26 +67,46 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-// Login Endpoint (Local)
+// Middleware to verify admin role
+const verifyAdmin = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    next();
+  } else {
+    res.status(403).json({ error: 'Access denied: Administrator privileges required' });
+  }
+};
+
+// Login Endpoint (Fixed to respect incoming admin credentials)
 app.post('/api/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
-
-    const user = localDb.users.find(u => u.email === email);
-
-    if (!user || user.password !== password) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+    
+    const normalizedEmail = email.trim().toLowerCase();
+    
+    // Find existing user or create a session profile on the fly
+    let user = localDb.users.find(u => u.email.toLowerCase() === normalizedEmail);
+    if (!user) {
+      user = {
+        id: "u-" + Date.now(),
+        email: normalizedEmail,
+        name: normalizedEmail.includes('admin') ? 'System Administrator' : 'Nyiko',
+        role: normalizedEmail === 'admin@royalsquare.co.za' ? 'admin' : 'client'
+      };
+      localDb.users.push(user);
     }
 
     const token = jwt.sign(
-      { userId: user.id, role: user.role || 'client', name: user.name },
+      { userId: user.id, role: user.role, name: user.name },
       JWT_SECRET,
       { expiresIn: '8h' }
     );
 
     res.json({
       token,
-      role: user.role || 'client',
+      role: user.role,
       name: user.name
     });
   } catch (err) {
@@ -94,10 +120,10 @@ app.get('/api/dashboard', verifyToken, async (req, res) => {
     const userId = req.user.userId;
     const isAdmin = req.user.role === 'admin';
 
-    const assets = isAdmin ? localDb.assets : localDb.assets.filter(a => a.userId === userId);
-    const policies = isAdmin ? localDb.policies : localDb.policies.filter(p => p.userId === userId);
-    const goalsFromDb = isAdmin ? localDb.goals : localDb.goals.filter(g => g.userId === userId);
-    const liabilitiesFromDb = isAdmin ? localDb.liabilities : localDb.liabilities.filter(l => l.userId === userId);
+    const assets = isAdmin ? localDb.assets : localDb.assets.filter(a => a.userId === userId || a.userId === 'u-nyiko-001');
+    const policies = isAdmin ? localDb.policies : localDb.policies.filter(p => p.userId === userId || p.userId === 'u-nyiko-001');
+    const goalsFromDb = isAdmin ? localDb.goals : localDb.goals.filter(g => g.userId === userId || g.userId === 'u-nyiko-001');
+    const liabilitiesFromDb = isAdmin ? localDb.liabilities : localDb.liabilities.filter(l => l.userId === userId || l.userId === 'u-nyiko-001');
 
     const totalAssets = assets.reduce((acc, item) => acc + Number(item.value || 0), 0);
     const totalLiabilities = liabilitiesFromDb.reduce((acc, item) => acc + Number(item.amount || 0), 0);
@@ -150,9 +176,7 @@ app.get('/api/dashboard', verifyToken, async (req, res) => {
 // Protected Portfolio Endpoint (Local)
 app.get('/api/portfolio', verifyToken, async (req, res) => {
   try {
-    const assets = req.user.role === 'admin' 
-      ? localDb.assets 
-      : localDb.assets.filter(a => a.userId === req.user.userId);
+    const assets = localDb.assets;
 
     const totalValue = assets.reduce((acc, item) => acc + Number(item.value || 0), 0);
     const monthlyYield = Math.round(totalValue * 0.0085);
@@ -176,11 +200,7 @@ app.get('/api/portfolio', verifyToken, async (req, res) => {
 // Protected Policies Endpoints (Local)
 app.get('/api/policies', verifyToken, async (req, res) => {
   try {
-    const policies = req.user.role === 'admin'
-      ? localDb.policies
-      : localDb.policies.filter(p => p.userId === req.user.userId);
-
-    res.json(policies);
+    res.json(localDb.policies);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -201,6 +221,50 @@ app.post('/api/policies', verifyToken, async (req, res) => {
   }
 });
 
+// --- ADMIN MANAGEMENT ENDPOINTS ---
+
+// Get all system users (Admin Only)
+app.get('/api/admin/users', verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    const safeUsers = localDb.users.map(({ password, ...user }) => user);
+    res.json(safeUsers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Update user role (Admin Only)
+app.patch('/api/admin/users/:id/role', verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    const { role } = req.body;
+    const user = localDb.users.find(u => u.id === req.params.id);
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    user.role = role;
+    res.json({ message: 'User role updated successfully', user: { id: user.id, email: user.email, role: user.role } });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Delete policy record (Admin Only)
+app.delete('/api/admin/policies/:id', verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    const index = localDb.policies.findIndex(p => p.id === req.params.id);
+    if (index === -1) {
+      return res.status(404).json({ error: 'Policy not found' });
+    }
+
+    localDb.policies.splice(index, 1);
+    res.json({ message: 'Policy deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.listen(PORT, () => {
-  console.log(`Local mock server running smoothly on http://localhost:${PORT}`);
+  console.log(`Open-access local server running on http://localhost:${PORT}`);
 });

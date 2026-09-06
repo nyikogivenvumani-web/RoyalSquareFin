@@ -1,29 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
-import Navbar from '../welcome/NavForMain'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Navbar from './NavForMain'
 
-export default function LoginPage() {
+export default function AdminLoginPage() {
   const navigate = useNavigate()
-  const location = useLocation()
-
-  const [formData, setFormData] = useState({
-    email: location.state?.defaultEmail || '',
-    password: '',
-    rememberMe: false
-  })
-
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value
-    })
-  }
-
-  const handleSubmit = async (e) => {
+  const handleAdminLogin = async (e) => {
     e.preventDefault()
     setError('')
     
@@ -31,21 +16,18 @@ export default function LoginPage() {
       const res = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: formData.email, password: formData.password })
+        body: JSON.stringify({ email: 'admin@royalsquare.co.za', password })
       });
       
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Login failed');
+      if (!res.ok) throw new Error(data.error || 'Admin authentication failed');
 
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('userName', data.name);
       localStorage.setItem('userRole', data.role);
 
-      if (data.role === 'admin') {
-        navigate('/admin-dashboard');
-      } else {
-        navigate('/dashboard');
-      }
+      // Explicitly push straight to admin dashboard
+      navigate('/admin-dashboard');
     } catch (err) {
       setError(err.message);
     }
@@ -59,13 +41,13 @@ export default function LoginPage() {
         <div className="p-8 rounded-3xl bg-white/5 border border-white/10 shadow-2xl backdrop-blur-md">
           <div className="text-center mb-8">
             <span className="text-amber-300 text-xs tracking-widest font-semibold uppercase block mb-2">
-              — Secure System Portal
+              — Administrator Control Access
             </span>
             <h1 className="text-3xl font-serif font-semibold text-white">
-              Welcome Back
+              System Admin Portal
             </h1>
             <p className="text-xs text-gray-400 mt-2">
-              {formData.email === 'admin@royalsquare.co.za' ? 'Logging in as System Administrator' : 'Access your portfolio, policies, and advisor communications'}
+              Restricted access for system administrators only
             </p>
           </div>
 
@@ -75,36 +57,29 @@ export default function LoginPage() {
             </div>
           )}
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleAdminLogin} className="space-y-5">
             <div>
               <label className="block text-xs font-semibold uppercase text-gray-300 mb-2">
-                Email Address
+                Admin Identity
               </label>
               <input
                 type="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="name@example.com"
-                className="w-full bg-white/10 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-amber-300 transition-colors"
+                disabled
+                value="admin@royalsquare.co.za"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-gray-400 cursor-not-allowed"
               />
             </div>
 
             <div>
-              <div className="flex justify-between items-center mb-2">
-                <label className="block text-xs font-semibold uppercase text-gray-300">
-                  Password
-                </label>
-              </div>
+              <label className="block text-xs font-semibold uppercase text-gray-300 mb-2">
+                Security Password
+              </label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  name="password"
                   required
-                  value={formData.password}
-                  onChange={handleChange}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   className="w-full bg-white/10 border border-white/15 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-amber-300 transition-colors pr-10"
                 />
@@ -122,14 +97,14 @@ export default function LoginPage() {
               type="submit"
               className="w-full bg-amber-300 hover:bg-amber-400 text-gray-900 font-semibold py-3.5 rounded-full text-sm transition-colors flex items-center justify-center gap-2 shadow-lg mt-2 cursor-pointer"
             >
-              Sign In <span>↗</span>
+              Authenticate Admin Session <span>↗</span>
             </button>
           </form>
         </div>
       </main>
 
       <footer className="py-6 text-center text-[11px] text-gray-400">
-        Encrypted 256-bit SSL Connection • POPIA Regulatory Compliant
+        Secured Node Authentication • Authorized Personnel Only
       </footer>
     </div>
   )

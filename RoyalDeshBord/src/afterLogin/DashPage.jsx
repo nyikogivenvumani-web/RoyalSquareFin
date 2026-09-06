@@ -41,36 +41,63 @@ class ErrorBoundary extends React.Component {
 function DashboardContent() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchDashboardData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const token = localStorage.getItem('authToken');
+      const res = await fetch('http://localhost:5000/api/dashboard', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (!res.ok) {
+        throw new Error(`Server returned status ${res.status}: ${res.statusText}`);
+      }
+
+      const data = await res.json();
+      setUserData(data);
+    } catch (err) {
+      console.error('Error fetching dashboard data:', err);
+      setError(err.message || 'Failed to connect to backend server');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        const token = localStorage.getItem('authToken');
-        const res = await fetch('http://localhost:5000/api/dashboard', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
-        if (!res.ok) {
-          throw new Error('Failed to fetch dashboard data');
-        }
-
-        const data = await res.json();
-        setUserData(data);
-      } catch (err) {
-        console.error('Error fetching dashboard data:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchDashboardData();
   }, []);
 
-  if (loading || !userData) {
+  if (loading) {
     return (
       <div className="bg-[#0B1D33] text-white min-h-screen flex items-center justify-center">
-        <p className="text-sm text-gray-400">Loading dashboard intelligence...</p>
+        <p className="text-sm text-gray-400 animate-pulse">Loading dashboard intelligence...</p>
+      </div>
+    );
+  }
+
+  if (error || !userData) {
+    return (
+      <div className="bg-[#0B1D33] text-white min-h-screen flex flex-col items-center justify-center p-6 text-center">
+        <div className="bg-white/5 border border-white/10 p-8 rounded-2xl max-w-md w-full space-y-4">
+          <div className="w-12 h-12 bg-amber-300/10 text-amber-300 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
+            !
+          </div>
+          <h2 className="text-xl font-serif font-semibold">Unable to Load Dashboard</h2>
+          <p className="text-sm text-gray-400">
+            {error || 'Could not retrieve account details from the server.'}
+          </p>
+          <button
+            onClick={fetchDashboardData}
+            className="w-full bg-amber-300 hover:bg-amber-400 text-gray-900 font-semibold py-2.5 rounded-full text-sm transition-colors mt-2"
+          >
+            Retry Connection
+          </button>
+        </div>
       </div>
     );
   }

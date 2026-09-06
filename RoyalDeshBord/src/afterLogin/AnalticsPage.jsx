@@ -5,13 +5,18 @@ export default function AnalticsPage() {
   const [policies, setPolicies] = useState([])
   const [loading, setLoading] = useState(true)
 
-  // Fetch policies data
+  // Fetch policies data with Auth Token
   useEffect(() => {
     const fetchPolicies = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/policies')
+        const token = localStorage.getItem('authToken')
+        const res = await fetch('http://localhost:5000/api/policies', {
+          headers: { Authorization: `Bearer ${token}` },
+        })
         const data = await res.json()
-        setPolicies(data)
+        if (res.ok) {
+          setPolicies(data)
+        }
       } catch (err) {
         console.error('Error fetching analytics data:', err)
       } finally {
@@ -25,7 +30,6 @@ export default function AnalticsPage() {
   const totalPolicies = policies.length
   const activePolicies = policies.filter((p) => p.status === 'Active').length
   
-  // Clean string currency parsing for total premiums (e.g., "R 2,400" -> 2400)
   const totalMonthlyPremium = policies.reduce((acc, p) => {
     const cleanedVal = parseFloat(String(p.premium || '0').replace(/[^0-9.]/g, ''))
     return acc + (isNaN(cleanedVal) ? 0 : cleanedVal)
@@ -36,7 +40,6 @@ export default function AnalticsPage() {
     return acc + (isNaN(cleanedVal) ? 0 : cleanedVal)
   }, 0)
 
-  // Group by provider
   const providerCounts = policies.reduce((acc, p) => {
     const prov = p.provider || 'Other'
     acc[prov] = (acc[prov] || 0) + 1
@@ -48,7 +51,6 @@ export default function AnalticsPage() {
       <NavForDash />
 
       <main className="max-w-6xl mx-auto px-6 py-10 space-y-8">
-        {/* Header */}
         <div>
           <span className="text-amber-300 text-xs tracking-widest font-semibold uppercase block">
             — Portfolio Intelligence
@@ -60,7 +62,6 @@ export default function AnalticsPage() {
           <p className="text-sm text-gray-400">Crunching portfolio analytics...</p>
         ) : (
           <>
-            {/* Top Stat Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="p-6 rounded-2xl bg-white/5 border border-white/10 space-y-2">
                 <span className="text-xs text-gray-400 uppercase tracking-widest font-semibold block">Total Policies</span>
@@ -87,9 +88,7 @@ export default function AnalticsPage() {
               </div>
             </div>
 
-            {/* Breakdown Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-              {/* Provider Distribution */}
               <div className="p-6 rounded-2xl bg-white/5 border border-white/10 space-y-4">
                 <h2 className="text-lg font-serif font-semibold text-white">Underwriting Providers</h2>
                 {Object.keys(providerCounts).length === 0 ? (
@@ -108,7 +107,6 @@ export default function AnalticsPage() {
                 )}
               </div>
 
-              {/* Status Overview */}
               <div className="p-6 rounded-2xl bg-white/5 border border-white/10 space-y-4">
                 <h2 className="text-lg font-serif font-semibold text-white">Portfolio Health Summary</h2>
                 <div className="space-y-3 text-xs text-gray-300">

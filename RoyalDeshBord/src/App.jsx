@@ -15,7 +15,8 @@ import PoliciesPage from './afterLogin/PoliciesPage';
 import AdvisorsPage from './afterLogin/AdvisorPage'; // Align the import alias with your route usage
 import AnalyticsPage from './afterLogin/AnalticsPage'; // Align the import alias or fix the filename
 import PortfolioPage from './afterLogin/PortfolioPage'; // Ensure this is used if needed
-
+import AdminDashboard from './afterLogin/AdminDashboard'; 
+import AdminLoginPage from './welcome/AdminLoginPage'; // Ensure this is used if needed
 
 export default function App() {
   return (
@@ -35,6 +36,9 @@ export default function App() {
         <Route path="/advisors" element={<AdvisorsPage />} />
         <Route path="/analytics" element={<AnalyticsPage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin-login" element={<AdminLoginPage />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
 
       </Routes>
     </Router>

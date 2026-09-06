@@ -20,12 +20,19 @@ export default function PoliciesPage() {
     expiryDate: '',
   })
 
-  // Fetch policies from backend API
+  // Fetch policies from backend API with Auth Token
   const fetchPolicies = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/policies')
+      const token = localStorage.getItem('authToken')
+      const res = await fetch('http://localhost:5000/api/policies', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       const data = await res.json()
-      setPolicies(data)
+      if (res.ok) {
+        setPolicies(data)
+      } else {
+        console.error('Failed to fetch policies:', data.error)
+      }
     } catch (err) {
       console.error('Error fetching policies:', err)
     } finally {
@@ -37,13 +44,17 @@ export default function PoliciesPage() {
     fetchPolicies()
   }, [])
 
-  // Handle new policy insertion
+  // Handle new policy insertion with Auth Token
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
+      const token = localStorage.getItem('authToken')
       const res = await fetch('http://localhost:5000/api/policies', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(formData),
       })
 
@@ -160,7 +171,7 @@ export default function PoliciesPage() {
                 </div>
 
                 <div className="flex items-center justify-between pt-1 text-[11px] text-gray-400">
-                  <span>Expires: {new Date(policy.expiryDate).toLocaleDateString()}</span>
+                  <span>Expires: {policy.expiryDate ? new Date(policy.expiryDate).toLocaleDateString() : 'N/A'}</span>
                 </div>
               </div>
             ))}
