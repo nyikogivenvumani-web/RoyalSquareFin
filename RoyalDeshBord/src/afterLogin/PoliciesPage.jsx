@@ -9,6 +9,7 @@ export default function PoliciesPage() {
 
   // New policy form state
   const [formData, setFormData] = useState({
+    policyNumber: '',
     name: '',
     type: 'Business',
     provider: '',
@@ -46,22 +47,29 @@ export default function PoliciesPage() {
         body: JSON.stringify(formData),
       })
 
-      if (res.ok) {
-        setIsModalOpen(false)
-        setFormData({
-          name: '',
-          type: 'Business',
-          provider: '',
-          premium: '',
-          coverageAmount: '',
-          status: 'Active',
-          startDate: '',
-          expiryDate: '',
-        })
-        fetchPolicies() // Refresh database list
+      const data = await res.json()
+
+      if (!res.ok) {
+        alert(`Failed to save: ${data.error || 'Unknown database error'}`)
+        return
       }
+
+      setIsModalOpen(false)
+      setFormData({
+        policyNumber: '',
+        name: '',
+        type: 'Business',
+        provider: '',
+        premium: '',
+        coverageAmount: '',
+        status: 'Active',
+        startDate: '',
+        expiryDate: '',
+      })
+      fetchPolicies() // Refresh database list
     } catch (err) {
       console.error('Error creating policy:', err)
+      alert('Network error: Could not connect to the backend server.')
     }
   }
 
@@ -167,6 +175,18 @@ export default function PoliciesPage() {
             <h2 className="text-xl font-serif font-bold text-white">Insert New Policy</h2>
 
             <form onSubmit={handleSubmit} className="space-y-3 text-xs">
+              <div>
+                <label className="text-gray-300 block mb-1">Policy Number / Ref</label>
+                <input
+                  required
+                  type="text"
+                  placeholder="e.g. POL-98421"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-white outline-none focus:border-amber-300"
+                  value={formData.policyNumber}
+                  onChange={(e) => setFormData({ ...formData, policyNumber: e.target.value })}
+                />
+              </div>
+
               <div>
                 <label className="text-gray-300 block mb-1">Policy Name</label>
                 <input
