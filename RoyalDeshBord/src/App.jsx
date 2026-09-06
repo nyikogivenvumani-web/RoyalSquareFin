@@ -18,6 +18,7 @@ import AnalyticsPage from './afterLogin/AnalticsPage'; // Align the import alias
 import PortfolioPage from './afterLogin/PortfolioPage'; // Ensure this is used if needed
 import AdminDashboard from './afterLogin/AdminDashboard'; 
 import AdminLoginPage from './welcome/AdminLoginPage'; // Ensure this is used if needed
+import SubmitClaimPage from './afterLogin/SubmitClaimPage'; // Ensure this is used if needed
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin-login" element={<AdminLoginPage />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/submit-claim" element={<SubmitClaimPage />} />
 
       </Routes>
     </Router>

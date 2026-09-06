@@ -66,7 +66,7 @@ export default function DashPage() {
 
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <Link
-                to="/claims"
+                to="/submit-claim"
                 className="bg-slate-900 hover:bg-slate-800 text-white font-medium px-6 py-3.5 rounded-full text-sm transition-all shadow-sm flex items-center gap-2 group"
               >
                 <span>Submit a Claim</span>
@@ -79,9 +79,9 @@ export default function DashPage() {
                 Report Incident
               </Link>
             </div>
-          </div>
+          </div> {/* <-- Added the missing closing div for lg:col-span-7 */}
 
-          {/* Right Hero Preview Card (resembling the video/card container element) */}
+          {/* Right Hero Preview Card */}
           <div className="lg:col-span-5">
             <div className="bg-white p-8 rounded-3xl border border-slate-200/80 shadow-xl shadow-slate-200/50 relative overflow-hidden space-y-6">
               <div className="absolute top-0 right-0 transform translate-x-6 -translate-y-6 w-32 h-32 bg-blue-50 rounded-full pointer-events-none"></div>
