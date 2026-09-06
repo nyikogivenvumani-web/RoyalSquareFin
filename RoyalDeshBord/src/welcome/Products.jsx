@@ -109,7 +109,7 @@ export default function Products() {
                 <ul className="space-y-2 mb-8">
                   {item.features.map((feat, index) => (
                     <li key={index} className="flex items-center gap-3 text-xs text-gray-400">
-                      <span className="text-amber-300 font-bold">✓</span>
+                      <span className="text-amber-300 font-bold">-</span>
                       {feat}
                     </li>
                   ))}
@@ -121,7 +121,7 @@ export default function Products() {
                   href="/contact"
                   className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-5 py-2.5 rounded-full transition-colors flex items-center gap-2"
                 >
-                  Apply & Inquire <span>↗</span>
+                  Apply & Inquire
                 </a>
                 <span className="text-xs text-gray-400">POPIA Compliant</span>
               </div>
